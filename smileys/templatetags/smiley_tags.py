@@ -14,7 +14,7 @@ def smileys(value):
 
     for smiley in Smiley.objects.filter(is_active=True):
         # come up with the <img> tag
-        img = '<img clas="smiley" src="%s" alt="%s" height="%i" width="%i" />' % (smiley.image.url, smiley.description, smiley.image.height, smiley.image.width)
+        img = '<img class="smiley" src="%s" alt="%s" height="%i" width="%i" />' % (smiley.image.url, smiley.description, smiley.image.height, smiley.image.width)
 
         if smiley.is_regex:
             # regex patterns allow you to use the same Smiley for multiple
