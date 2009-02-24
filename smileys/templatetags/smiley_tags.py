@@ -4,7 +4,7 @@ import re
 
 register = template.Library()
 
-def smileys(value):
+def gen_smileys(value, type):
     """
     Replaces all occurrences of the active smiley patterns in `value` with a
     tag that points to the image associated with the respective pattern.
@@ -14,7 +14,10 @@ def smileys(value):
 
     for smiley in Smiley.objects.filter(is_active=True):
         # come up with the <img> tag
-        img = '<img class="smiley" src="%s" alt="%s" height="%i" width="%i" />' % (smiley.image.url, smiley.description, smiley.image.height, smiley.image.width)
+        if type == 'html':
+            img = '<img class="smiley" src="%s" alt="%s" height="%i" width="%i" />' % (smiley.image.url, smiley.description, smiley.image.height, smiley.image.width)
+        elif type == 'textile':
+            img = '!%s!' % smiley.image.url
 
         if smiley.is_regex:
             # regex patterns allow you to use the same Smiley for multiple
@@ -26,4 +29,6 @@ def smileys(value):
 
     return value
 
-register.filter(smileys)
+# register the filters
+register.filter('smileys', lambda v: gen_smileys(v, 'html'))
+register.filter('textile_smileys', lambda v: gen_smileys(v, 'textile'))
