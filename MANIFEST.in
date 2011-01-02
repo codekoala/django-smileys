@@ -1,1 +1,3 @@
-recursive-include smileys *.py
+include README.rst AUTHORS LICENSE
+recursive-include smileys *.*
+recursive-exclude smileys *.pyc .*.swp
