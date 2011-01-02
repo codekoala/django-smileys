@@ -17,7 +17,12 @@ def gen_smileys(value, type):
         if type == 'html':
             img = '<img class="smiley" src="%s" alt="%s" height="%i" width="%i" />' % (smiley.image.url, smiley.description, smiley.image.height, smiley.image.width)
         elif type == 'textile':
-            img = '!%s!' % smiley.image.url
+            # the description between parentheses is told not to be parsed by
+            # textile with the '==' textile tag surrounding it. the parentheses
+            # are separated from '==' so that it does not clash with a smiley
+            # like =)
+
+            img = '!%s ( == %s == )!' % (smiley.image.url, smiley.description)
 
         if smiley.is_regex:
             # regex patterns allow you to use the same Smiley for multiple
