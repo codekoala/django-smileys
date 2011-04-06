@@ -23,7 +23,9 @@ def gen_smileys(value, type):
             # like =)
 
             img = '!%s ( == %s == )!' % (smiley.image.url, smiley.description)
-
+        elif type == 'markdown':
+            # Adds markdown support to smileys
+            img = '![%s](%s)' % (smiley.description, smiley.image.url)
         if smiley.is_regex:
             # regex patterns allow you to use the same Smiley for multiple
             # ways to type a smiley
@@ -37,3 +39,4 @@ def gen_smileys(value, type):
 # register the filters
 register.filter('smileys', lambda v: gen_smileys(v, 'html'))
 register.filter('textile_smileys', lambda v: gen_smileys(v, 'textile'))
+register.filter('markdown_smileys', lambda v: gen_smileys(v, 'markdown'))
